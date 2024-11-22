@@ -148,7 +148,7 @@ class ReactI18nextFramework extends Framework {
         ranges.push({
           start: match.index,
           end: match.index + match[0].length,
-          namespace: match[1],
+          namespace: camelToKebab(match[1]),
         })
       }
     }
@@ -164,7 +164,7 @@ class ReactI18nextFramework extends Framework {
         ranges.push({
           start: match.index,
           end: match.index + match[0].length,
-          namespace: match[1],
+          namespace: camelToKebab(match[1]),
         })
       }
     }
@@ -187,7 +187,7 @@ class ReactI18nextFramework extends Framework {
         ranges.push({
           start: match.index,
           end: text.length,
-          namespace: match[1],
+          namespace: camelToKebab(match[1]),
         })
       }
     }

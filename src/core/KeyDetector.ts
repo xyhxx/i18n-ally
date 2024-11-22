@@ -55,13 +55,33 @@ export class KeyDetector {
     return keyRange?.key
   }
 
-  static getScopedKey(document: TextDocument, position: Position)
-  {
+  static getScopedKey(document: TextDocument, position: Position) {
     const scopes = Global.enabledFrameworks.flatMap(f => f.getScopeRange(document) || [])
-    if (scopes.length > 0)
-    {
+
+    if (scopes.length > 0) {
       const offset = document.offsetAt(position)
-      return scopes.filter(s => s.start < offset && offset < s.end).map(s => s.namespace).join('.')
+
+      // return scopes.filter(s => s.start < offset && offset < s.end).map(s => camelToKebab(s.namespace)).join('.')
+
+      const inScopeList = scopes.filter(s => s.start < offset && offset < s.end)
+
+      if (inScopeList.length > 1) {
+        let result: ScopeRange = inScopeList[0]
+
+        // 如果有多条数据 找到start距离当前最近的匹配
+        for (const [index, item] of inScopeList.entries()) {
+          if (index === 0) continue
+
+          const currentStartOffset = offset - item.start
+          const prevStartOffset = offset - result.start
+
+          if (currentStartOffset < prevStartOffset) result = item
+        }
+
+        return result.namespace
+      }
+
+      return inScopeList[0].namespace
     }
   }
 
