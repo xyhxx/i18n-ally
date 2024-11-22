@@ -1,9 +1,9 @@
 {
-  "publisher": "lokalise",
+  "publisher": "xyh",
   "name": "i18n-ally-kebab",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "displayName": "i18n Ally kebab",
-  "description": "🌍 All in one i18n extension for VS Code",
+  "description": "fork i18n ally 实现namespace从Camel转到Kebab模式",
   "keywords": [
     "vue",
     "vue-i18n",
