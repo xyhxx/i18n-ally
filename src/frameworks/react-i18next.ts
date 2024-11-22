@@ -3,6 +3,7 @@ import { Framework, ScopeRange } from './base'
 import { LanguageId } from '~/utils'
 import { extractionsParsers, DefaultExtractionRules, DefaultDynamicExtractionsRules } from '~/extraction'
 import { Config, RewriteKeySource, RewriteKeyContext } from '~/core'
+import { camelToKebab } from '~/utils/camelToKebab'
 
 class ReactI18nextFramework extends Framework {
   id = 'react-i18next'
@@ -101,7 +102,7 @@ class ReactI18nextFramework extends Framework {
   }
 
   rewriteKeys(key: string, source: RewriteKeySource, context: RewriteKeyContext = {}) {
-    const dottedKey = key.split(this.namespaceDelimitersRegex).join('.')
+    let dottedKey = key.split(this.namespaceDelimitersRegex).join('.')
 
     // when explicitly set the namespace, ignore current namespace scope
     if (
@@ -111,6 +112,14 @@ class ReactI18nextFramework extends Framework {
     )
       // +1 for the an extra `.`
       key = key.slice(context.namespace.length + 1)
+
+    if (context.namespace)
+      context.namespace = camelToKebab(context.namespace)
+
+    const dottedKeyList = dottedKey.split('.')
+    dottedKeyList[0] = camelToKebab(dottedKeyList[0])
+
+    dottedKey = dottedKeyList.join('.')
 
     // replace colons
     return dottedKey

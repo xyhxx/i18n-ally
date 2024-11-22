@@ -1,8 +1,8 @@
 {
   "publisher": "lokalise",
-  "name": "i18n-ally",
-  "version": "2.13.1",
-  "displayName": "i18n Ally",
+  "name": "i18n-ally-kebab",
+  "version": "0.1.0",
+  "displayName": "i18n Ally kebab",
   "description": "🌍 All in one i18n extension for VS Code",
   "keywords": [
     "vue",
