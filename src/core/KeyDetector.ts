@@ -58,6 +58,9 @@ export class KeyDetector {
   static getScopedKey(document: TextDocument, position: Position) {
     const scopes = Global.enabledFrameworks.flatMap(f => f.getScopeRange(document) || [])
 
+    let resultNameSpace = ''
+    let resultKeyPrefix: string | undefined = ''
+
     if (scopes.length > 0) {
       const offset = document.offsetAt(position)
 
@@ -78,11 +81,17 @@ export class KeyDetector {
           if (currentStartOffset < prevStartOffset) result = item
         }
 
-        return result.namespace
+        resultNameSpace = result.namespace
+        resultKeyPrefix = result.keyPrefix
       }
 
-      return inScopeList[0].namespace
+      resultNameSpace = inScopeList[0].namespace
+      resultKeyPrefix = inScopeList[0].keyPrefix
     }
+
+    const result = [resultNameSpace, resultKeyPrefix].filter(Boolean).join('.')
+
+    return CurrentFile.loader.rewriteKeys(result, 'reference', { namespace: resultNameSpace })
   }
 
   static getKeyAndRange(document: TextDocument, position: Position, dotEnding?: boolean) {

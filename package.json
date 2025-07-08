@@ -1,7 +1,7 @@
 {
   "publisher": "lokalise",
   "name": "i18n-ally-kebab",
-  "version": "0.1.3",
+  "version": "0.2.1",
   "displayName": "i18n Ally kebab",
   "description": "fork i18n ally 实现namespace从Camel转到Kebab模式",
   "keywords": [
@@ -1133,6 +1133,11 @@
             "type": "string"
           },
           "description": "%config.usage.scanning_ignore%"
+        },
+        "i18n-ally.keyPrefix": {
+          "type": "boolean",
+          "description": "Enable keyPrefix parsing",
+          "default": false
         },
         "i18n-ally.usage.derivedKeyRules": {
           "type": "array",
